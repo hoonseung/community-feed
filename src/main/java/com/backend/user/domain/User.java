@@ -10,6 +10,7 @@ public class User {
 
     @Getter
     private final Long id;
+    @Getter
     private final UserInfo userInfo;
     private final PositiveIntegerCounter followerCounter;
     private final PositiveIntegerCounter followingCounter;

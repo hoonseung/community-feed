@@ -28,7 +28,7 @@ public class UserEntity extends TimeBaseEntity {
     private Integer followingCount;
 
 
-    public static UserEntity createUser(User user) {
+    public static UserEntity createUserEntity(User user) {
         return new UserEntity(
             null,
             user.getName(),

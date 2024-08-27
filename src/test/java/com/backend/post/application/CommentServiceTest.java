@@ -49,7 +49,7 @@ class CommentServiceTest extends PostApplicationTestTemplate {
         commentService.like(likeCommentRequestDto);
 
         //then
-        assertEquals(1, comment.getCount());
+        assertEquals(1, comment.getLikeCount());
     }
 
     @DisplayName("댓글 싫어요 요청이 주어지면 성공적 수행된다.")
@@ -66,6 +66,6 @@ class CommentServiceTest extends PostApplicationTestTemplate {
         commentService.dislike(disLikeCommentRequestDto);
 
         //then
-        assertEquals(0, comment.getCount());
+        assertEquals(0, comment.getLikeCount());
     }
 }

@@ -22,7 +22,7 @@ class PostTest {
     void init() {
         user1 = new User(1L, new UserInfo("홍길동", ""));
         user2 = new User(2L, new UserInfo("이순신", ""));
-        post = Post.createPost(1L, user1, "content", PostPublicationState.PUBLIC);
+        post = Post.createPost(1L, user1, "content", 0, PostPublicationState.PUBLIC);
     }
 
 
@@ -35,7 +35,7 @@ class PostTest {
         post.like(user2);
 
         //then
-        assertEquals(1, post.getCount());
+        assertEquals(1, post.getLikeCount());
     }
 
     @DisplayName("사용자 자신의 게시글을 좋아요를 하면 예외가 발생해야한다..")
@@ -58,7 +58,7 @@ class PostTest {
         post.dislike(user2);
 
         //then
-        assertEquals(0, post.getCount());
+        assertEquals(0, post.getLikeCount());
     }
 
     @DisplayName("사용자 자신의 게시글을 싫어요를 하면 예외가 발생해야한다..")

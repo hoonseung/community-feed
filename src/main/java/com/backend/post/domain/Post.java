@@ -16,26 +16,30 @@ public class Post {
     @Getter
     private final Content content;
     private final PositiveIntegerCounter likeCounter;
+    @Getter
     private PostPublicationState state;
 
 
     public static Post createPost(User user, String content, PostPublicationState state) {
-        return new Post(null, user, new PostContent(content), state);
+        return new Post(null, user, new PostContent(content), 0, state);
     }
 
-    public static Post createPost(Long id, User user, String content, PostPublicationState state) {
-        return new Post(id, user, new PostContent(content), state);
+    public static Post createPost(Long id, User user, String content, Integer likeCount,
+        PostPublicationState state) {
+        return new Post(id, user, new PostContent(content), likeCount, state);
     }
 
 
-    public Post(Long id, User author, Content content, PostPublicationState state) {
+    public Post(Long id, User author, Content content, Integer likeCount,
+        PostPublicationState state) {
         if (author == null) {
             throw new IllegalArgumentException("Author cannot be null");
         }
         this.id = id;
         this.author = author;
         this.content = content;
-        this.likeCounter = new PositiveIntegerCounter();
+        this.likeCounter =
+            likeCount == 0 ? new PositiveIntegerCounter() : new PositiveIntegerCounter(likeCount);
         this.state = state;
     }
 
@@ -62,8 +66,12 @@ public class Post {
         this.state = state;
     }
 
-    public int getCount() {
+    public int getLikeCount() {
         return this.likeCounter.getCount();
+    }
+
+    public String getPostContent() {
+        return this.content.getContentText();
     }
 
 }

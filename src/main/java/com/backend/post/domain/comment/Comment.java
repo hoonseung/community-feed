@@ -21,11 +21,16 @@ public class Comment {
 
 
     public static Comment createComment(User author, String content, Post post) {
-        return new Comment(null, author, new CommentContent(content), post);
+        return new Comment(null, author, new CommentContent(content), post, 0);
+    }
+
+    public static Comment createComment(Long id, User author, String content, Post post,
+        Integer likeCount) {
+        return new Comment(id, author, new CommentContent(content), post, likeCount);
     }
 
 
-    public Comment(Long id, User author, Content content, Post post) {
+    public Comment(Long id, User author, Content content, Post post, Integer likeCount) {
         if (author == null) {
             throw new IllegalArgumentException("Author cannot be null");
         }
@@ -40,7 +45,8 @@ public class Comment {
         this.author = author;
         this.content = content;
         this.post = post;
-        this.likeCounter = new PositiveIntegerCounter();
+        this.likeCounter =
+            likeCount == 0 ? new PositiveIntegerCounter() : new PositiveIntegerCounter(likeCount);
     }
 
 
@@ -68,7 +74,11 @@ public class Comment {
     }
 
 
-    public int getCount() {
+    public int getLikeCount() {
         return likeCounter.getCount();
+    }
+
+    public String getCommentContent() {
+        return this.getContent().getContentText();
     }
 }

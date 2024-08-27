@@ -21,7 +21,7 @@ public class FakeCommentRepository implements CommentRepository {
 
         Long commentId = id++;
         Comment newComment = new Comment(commentId, comment.getAuthor(), comment.getContent(),
-            comment.getPost());
+            comment.getPost(), 0);
 
         store.put(commentId, newComment);
         return newComment;

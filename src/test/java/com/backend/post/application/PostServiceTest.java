@@ -54,7 +54,7 @@ class PostServiceTest extends PostApplicationTestTemplate {
         postService.likePost(likePostRequestDto);
 
         //then
-        assertEquals(1, post.getCount());
+        assertEquals(1, post.getLikeCount());
     }
 
     @DisplayName("게시글 싫어요 요청이 주어지면 성공적 수행된다.")
@@ -70,7 +70,7 @@ class PostServiceTest extends PostApplicationTestTemplate {
         postService.dislikePost(disLikePostRequestDto);
 
         //then
-        assertEquals(0, post.getCount());
+        assertEquals(0, post.getLikeCount());
     }
 
 

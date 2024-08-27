@@ -1,7 +1,9 @@
 package com.backend.user.domain;
 
 import java.util.Objects;
+import lombok.Getter;
 
+@Getter
 public class UserInfo {
 
     private final String name;

@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor()
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @IdClass(UserFollowRelationIdEntity.class)
 @Table(name = "community_user_follow_relation")
@@ -23,6 +23,7 @@ public class UserFollowRelationEntity extends TimeBaseEntity {
 
     @Id
     private Long followingUserId;
+
 
 
 }

@@ -11,10 +11,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 @Table(name = "community_user")
 @Entity
 public class UserEntity extends TimeBaseEntity {
@@ -30,7 +32,7 @@ public class UserEntity extends TimeBaseEntity {
 
     public static UserEntity createUserEntity(User user) {
         return new UserEntity(
-            null,
+            user.getId() == null ? null : user.getId(),
             user.getName(),
             user.getImageUrl(),
             user.getFollowerCount(),
@@ -44,8 +46,8 @@ public class UserEntity extends TimeBaseEntity {
             id,
             name,
             profileImage,
-            followingCount,
-            followerCount
+            followerCount,
+            followingCount
         );
     }
 }

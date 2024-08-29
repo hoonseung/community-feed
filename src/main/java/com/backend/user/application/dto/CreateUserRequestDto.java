@@ -1,14 +1,13 @@
 package com.backend.user.application.dto;
 
-import com.backend.user.domain.UserInfo;
+import com.backend.user.domain.User;
 
 public record CreateUserRequestDto(
     String name,
     String profileImageUrl
 ) {
 
-
-    public UserDto toUserDto() {
-        return UserDto.of(null, new UserInfo(name, profileImageUrl));
+    public User toUser() {
+        return User.createUser(null, name, profileImageUrl);
     }
 }

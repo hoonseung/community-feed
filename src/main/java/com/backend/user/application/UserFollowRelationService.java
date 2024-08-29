@@ -4,7 +4,9 @@ import com.backend.user.application.dto.FollowUserRequestDto;
 import com.backend.user.application.dto.UnFollowUserRequestDto;
 import com.backend.user.application.interfaces.UserFollowRelationRepository;
 import com.backend.user.domain.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserFollowRelationService {
 
     private final UserService userService;

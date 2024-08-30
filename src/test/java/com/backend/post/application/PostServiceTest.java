@@ -34,10 +34,10 @@ class PostServiceTest extends PostApplicationTestTemplate {
         String updateContent = "update content";
         Post post = postService.createPost(createPostRequestDto);
         UpdatePostRequestDto updatePostRequestDto = new UpdatePostRequestDto(user1.getId(),
-            post.getId(), updateContent, PostPublicationState.PUBLIC);
+            updateContent, PostPublicationState.PUBLIC);
 
         //when
-        Post updatePost = postService.updatePost(updatePostRequestDto);
+        Post updatePost = postService.updatePost(post.getId(), updatePostRequestDto);
 
         //then
         assertEquals(updateContent, updatePost.getContent().getContentText());

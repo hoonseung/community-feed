@@ -32,7 +32,7 @@ class CommentServiceTest extends PostApplicationTestTemplate {
         String updateContent = "updated content";
 
         //when
-        Comment updateComment = commentService.updateComment(updateCommentRequestDto);
+        Comment updateComment = commentService.updateComment(comment.getId(), updateCommentRequestDto);
 
         //then
         assertEquals(updateContent, updateComment.getContent().getContentText());
@@ -46,7 +46,7 @@ class CommentServiceTest extends PostApplicationTestTemplate {
             comment.getId());
 
         //when
-        commentService.like(likeCommentRequestDto);
+        commentService.likeComment(likeCommentRequestDto);
 
         //then
         assertEquals(1, comment.getLikeCount());
@@ -58,12 +58,12 @@ class CommentServiceTest extends PostApplicationTestTemplate {
         //given
         LikeCommentRequestDto likeCommentRequestDto = new LikeCommentRequestDto(user1.getId(),
             comment.getId());
-        commentService.like(likeCommentRequestDto);
+        commentService.likeComment(likeCommentRequestDto);
 
         DisLikeCommentRequestDto disLikeCommentRequestDto = new DisLikeCommentRequestDto(
             user1.getId(), comment.getId());
         //when
-        commentService.dislike(disLikeCommentRequestDto);
+        commentService.dislikeComment(disLikeCommentRequestDto);
 
         //then
         assertEquals(0, comment.getLikeCount());

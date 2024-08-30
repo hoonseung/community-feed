@@ -7,13 +7,16 @@ import com.backend.user.repository.jpa.JpaUserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;
 
+    @Transactional
     @Override
     public User save(User user) {
         UserEntity userEntity = jpaUserRepository.save(UserEntity.createUserEntity(user));
@@ -22,9 +25,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(Long id) {
-        UserEntity userEntity = jpaUserRepository.findById(id)
+        return jpaUserRepository.findById(id)
+            .map(UserEntity::toUser)
             .orElseThrow(() -> new EntityNotFoundException("user entity not found"));
-
-        return userEntity.toUser();
     }
 }

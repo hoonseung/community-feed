@@ -20,14 +20,12 @@ public class LikeRelationEntity extends TimeBaseEntity {
     private LikeRelationIdEntity id;
 
 
-    public static LikeRelationEntity createPostLikeRelationEntity(Long postId, Long userId,
-        String targetType) {
+    public static LikeRelationEntity createPostLikeRelationEntity(Long postId, Long userId) {
         return new LikeRelationEntity(
             new LikeRelationIdEntity(postId, userId, LikeTarget.POST.name()));
     }
 
-    public static LikeRelationEntity createCommentLikeRelationEntity(Long commentId, Long userId,
-        String targetType) {
+    public static LikeRelationEntity createCommentLikeRelationEntity(Long commentId, Long userId) {
         return new LikeRelationEntity(
             new LikeRelationIdEntity(commentId, userId, LikeTarget.COMMENT.name()));
     }

@@ -3,6 +3,7 @@ package com.backend.user.application;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.backend.fake.FakeObjectFactory;
+import com.backend.user.application.dto.CreateUserRequestDto;
 import com.backend.user.application.dto.UserDto;
 import com.backend.user.domain.User;
 import com.backend.user.domain.UserInfo;
@@ -20,7 +21,7 @@ class UserServiceTest {
     @Test
     void givenUser_whenCreatingUser_thenReturnUser() {
         //given
-        UserDto dto = UserDto.of(null, new UserInfo("홍길동", ""));
+        CreateUserRequestDto dto = new CreateUserRequestDto("홍길동", "");
 
         //when
         User result = userService.createUser(dto);

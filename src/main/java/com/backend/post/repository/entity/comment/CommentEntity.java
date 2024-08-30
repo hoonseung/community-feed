@@ -31,11 +31,11 @@ public class CommentEntity extends TimeBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "author_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private UserEntity author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private PostEntity post;
 
@@ -43,9 +43,9 @@ public class CommentEntity extends TimeBaseEntity {
     private Integer likeCount;
 
 
-    public static CommentEntity createPost(Comment comment) {
+    public static CommentEntity createComment(Comment comment) {
         return new CommentEntity(
-            null,
+            comment.getId() == null ? null : comment.getId(),
             UserEntity.createUserEntity(comment.getAuthor()),
             PostEntity.createPostEntity(comment.getPost()),
             comment.getCommentContent(),

@@ -5,7 +5,6 @@ import com.backend.post.domain.Post;
 import com.backend.post.domain.cotent.PostPublicationState;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class FakePostRepository implements PostRepository {
 
@@ -27,7 +26,7 @@ public class FakePostRepository implements PostRepository {
     }
 
     @Override
-    public Optional<Post> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public Post findById(Long id) {
+        return store.get(id);
     }
 }

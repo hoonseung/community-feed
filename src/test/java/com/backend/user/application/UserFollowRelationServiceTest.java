@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.backend.fake.FakeObjectFactory;
+import com.backend.user.application.dto.CreateUserRequestDto;
 import com.backend.user.application.dto.FollowUserRequestDto;
 import com.backend.user.application.dto.UnFollowUserRequestDto;
 import com.backend.user.application.dto.UserDto;
@@ -32,8 +33,10 @@ class UserFollowRelationServiceTest {
 
     @BeforeEach
     void init() {
-        user1 = userService.createUser(UserDto.of(null, new UserInfo("홍길동", "")));
-        user2 = userService.createUser(UserDto.of(null, new UserInfo("이순신", "")));
+        user1 = userService.createUser(
+            new CreateUserRequestDto("홍길동", ""));
+        user2 = userService.createUser(
+            new CreateUserRequestDto("이순신", ""));
         followUserRequestDto =  new FollowUserRequestDto(user1.getId(), user2.getId());
         followSelfUserRequestDto = new FollowUserRequestDto(user1.getId(), user1.getId());
         unFollowUserRequestDto = new UnFollowUserRequestDto(user1.getId(), user2.getId());

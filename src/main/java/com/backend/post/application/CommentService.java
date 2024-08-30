@@ -10,7 +10,11 @@ import com.backend.post.domain.Post;
 import com.backend.post.domain.comment.Comment;
 import com.backend.user.application.UserService;
 import com.backend.user.domain.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
+@Service
 public class CommentService {
 
 
@@ -18,16 +22,6 @@ public class CommentService {
     private final UserService userService;
     private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
-
-
-    public CommentService(PostService postService, UserService userService,
-        CommentRepository commentRepository, LikeRepository likeRepository) {
-        this.postService = postService;
-        this.userService = userService;
-        this.commentRepository = commentRepository;
-        this.likeRepository = likeRepository;
-    }
-
 
 
     public Comment createComment(CreateCommentRequestDto dto) {
@@ -38,9 +32,9 @@ public class CommentService {
     }
 
 
-    public Comment updateComment(UpdateCommentRequestDto dto) {
+    public Comment updateComment(Long commentId, UpdateCommentRequestDto dto) {
         User user = userService.getUser(dto.userId());
-        Comment comment = getComment(dto.commentId());
+        Comment comment = getComment(commentId);
 
         comment.updateComment(user, dto.content());
 
@@ -48,7 +42,7 @@ public class CommentService {
     }
 
 
-    public void like(LikeCommentRequestDto dto) {
+    public void likeComment(LikeCommentRequestDto dto) {
         User user = userService.getUser(dto.userId());
         Comment comment = getComment(dto.commentId());
 
@@ -62,7 +56,7 @@ public class CommentService {
     }
 
 
-    public void dislike(DisLikeCommentRequestDto dto) {
+    public void dislikeComment(DisLikeCommentRequestDto dto) {
         User user = userService.getUser(dto.userId());
         Comment comment = getComment(dto.commentId());
 
@@ -71,13 +65,12 @@ public class CommentService {
         if (!likeRepository.checkLike(comment, user)) {
             throw new IllegalArgumentException("this user never pushed like button comment");
         }
-        likeRepository.save(comment, user);
+        likeRepository.delete(comment, user);
     }
 
 
     public Comment getComment(Long id) {
-        return commentRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("comment not found"));
+        return commentRepository.findById(id);
     }
 }
 

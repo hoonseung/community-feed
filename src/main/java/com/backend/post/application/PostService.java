@@ -9,22 +9,17 @@ import com.backend.post.application.interfaces.PostRepository;
 import com.backend.post.domain.Post;
 import com.backend.user.application.UserService;
 import com.backend.user.domain.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
+@Service
 public class PostService {
 
 
     private final UserService userService;
     private final LikeRepository likeRepository;
     private final PostRepository postRepository;
-
-    public PostService(PostRepository postRepository, UserService userService,
-        LikeRepository likeRepository) {
-
-        this.postRepository = postRepository;
-        this.userService = userService;
-        this.likeRepository = likeRepository;
-    }
-
 
 
     public Post createPost(CreatePostRequestDto dto) {
@@ -33,9 +28,9 @@ public class PostService {
     }
 
 
-    public Post updatePost(UpdatePostRequestDto dto) {
+    public Post updatePost(Long postId, UpdatePostRequestDto dto) {
         User user = userService.getUser(dto.userId());
-        Post post = getPost(dto.postId());
+        Post post = getPost(postId);
         post.updatePost(user, dto.content(), dto.state());
 
         return postRepository.save(post);
@@ -43,10 +38,8 @@ public class PostService {
 
 
     public Post getPost(Long id) {
-        return postRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("post not found"));
+        return postRepository.findById(id);
     }
-
 
     public void likePost(LikePostRequestDto dto) {
         User user = userService.getUser(dto.userId());

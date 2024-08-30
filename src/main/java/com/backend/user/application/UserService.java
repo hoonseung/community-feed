@@ -5,6 +5,7 @@ import com.backend.user.application.dto.GetUserResponseDto;
 import com.backend.user.application.interfaces.UserRepository;
 import com.backend.user.domain.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -15,6 +16,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
     public User createUser(CreateUserRequestDto dto) {
         return userRepository.save(dto.toUser());
     }
@@ -23,7 +25,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public GetUserResponseDto getUserProfile(Long id){
+    public GetUserResponseDto getUserProfile(Long id) {
         return GetUserResponseDto.from(getUser(id));
     }
 }

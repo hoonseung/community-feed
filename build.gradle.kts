@@ -18,8 +18,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     // jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // lombok
     implementation("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
 
     //querydsl
     implementation ("com.querydsl:querydsl-jpa:5.0.0:jakarta")
@@ -27,9 +30,12 @@ dependencies {
     annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
     annotationProcessor ("jakarta.persistence:jakarta.persistence-api")
 
+    // test
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.rest-assured:rest-assured:5.5.0")
+    runtimeOnly("com.h2database:h2")
 
     // mysql
     runtimeOnly("com.mysql:mysql-connector-j")

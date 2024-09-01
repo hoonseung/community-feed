@@ -7,7 +7,6 @@ import com.backend.user.repository.entity.UserEntity;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,11 +37,15 @@ public class PostEntity extends TimeBaseEntity {
     private UserEntity author;
 
     private String content;
+
+    @ColumnDefault("0")
     private Integer likeCount;
 
     @Convert(converter = PostPublicationStatConverter.class)
     private PostPublicationState state;
 
+    @ColumnDefault("0")
+    private int commentCount;
 
     public static PostEntity createPostEntity(Post post) {
         return new PostEntity(
@@ -49,7 +53,9 @@ public class PostEntity extends TimeBaseEntity {
             UserEntity.createUserEntity(post.getAuthor()),
             post.getPostContent(),
             post.getLikeCount(),
-            post.getState());
+            post.getState(),
+            post.getCommentCount()
+        );
     }
 
     public Post toPost() {

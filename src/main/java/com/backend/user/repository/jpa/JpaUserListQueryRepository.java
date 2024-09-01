@@ -9,11 +9,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface JpaUserListQueryRepository extends JpaRepository<UserEntity, Long> {
 
-    @Query("select new com.backend.user.application.dto.GetUserListResponseDto(u.name, u.profileImage)"
+    @Query("select new com.backend.user.application.dto.GetUserListResponseDto(u.userName, u.profileImage)"
         + " from UserEntity u inner join UserFollowRelationEntity f on u.id = f.followingUserId where f.followerUserId = :userId")
     List<GetUserListResponseDto> getFollowerUserListById(@Param("userId") Long userId);
 
-    @Query("select new com.backend.user.application.dto.GetUserListResponseDto(u.name, u.profileImage) "
+    @Query("select new com.backend.user.application.dto.GetUserListResponseDto(u.userName, u.profileImage) "
         + "from UserEntity u inner join UserFollowRelationEntity f on u.id = f.followerUserId where f.followingUserId = :userId")
     List<GetUserListResponseDto> getFollowingUserListById(@Param("userId") Long userId);
 

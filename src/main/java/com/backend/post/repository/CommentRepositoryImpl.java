@@ -4,6 +4,7 @@ import com.backend.post.application.interfaces.CommentRepository;
 import com.backend.post.domain.comment.Comment;
 import com.backend.post.repository.entity.comment.CommentEntity;
 import com.backend.post.repository.jpa.JpaCommentRepository;
+import com.backend.post.repository.jpa.JpaPostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentRepositoryImpl implements CommentRepository {
 
     private final JpaCommentRepository jpaCommentRepository;
+    private final JpaPostRepository jpaPostRepository;
 
 
     @Transactional
@@ -23,10 +25,12 @@ public class CommentRepositoryImpl implements CommentRepository {
     public Comment save(Comment comment) {
         CommentEntity commentEntity = CommentEntity.createComment(comment);
         if (Objects.isNull(commentEntity.getId())) {
-            return jpaCommentRepository.save(commentEntity).toComment();
+            commentEntity = jpaCommentRepository.save(commentEntity);
+            jpaPostRepository.increaseCommentCount(commentEntity.getPost().getId());
+            return commentEntity.toComment();
         }
         jpaCommentRepository.updateCommentEntity(commentEntity);
-        return commentEntity.toComment();
+        return comment;
     }
 
     @Override

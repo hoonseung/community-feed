@@ -1,5 +1,6 @@
 package com.backend.user.repository;
 
+import com.backend.post.repository.post_queue.UserPostQueueCommandRepository;
 import com.backend.user.application.interfaces.UserFollowRelationRepository;
 import com.backend.user.domain.User;
 import com.backend.user.repository.entity.UserEntity;
@@ -18,6 +19,7 @@ public class UserFollowRelationRepositoryImpl implements UserFollowRelationRepos
 
     private final JpaUserFollowRelationRepository jpaUserFollowRelationRepository;
     private final JpaUserRepository jpaUserRepository;
+    private final UserPostQueueCommandRepository userPostQueueCommandRepository;
 
 
     @Override
@@ -36,6 +38,8 @@ public class UserFollowRelationRepositoryImpl implements UserFollowRelationRepos
             UserEntity.createUserEntity(user),
             UserEntity.createUserEntity(targetUser))
         );
+
+        userPostQueueCommandRepository.saveFollowPost(user.getId(), targetUser.getId());
     }
 
     @Transactional
@@ -47,5 +51,7 @@ public class UserFollowRelationRepositoryImpl implements UserFollowRelationRepos
             UserEntity.createUserEntity(user),
             UserEntity.createUserEntity(targetUser))
         );
+
+        userPostQueueCommandRepository.deleteUnfollowPost(user.getId(), targetUser.getId());
     }
 }

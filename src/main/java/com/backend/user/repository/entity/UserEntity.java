@@ -24,7 +24,7 @@ public class UserEntity extends TimeBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String userName;
     private String profileImage;
     private Integer followerCount;
     private Integer followingCount;
@@ -44,7 +44,7 @@ public class UserEntity extends TimeBaseEntity {
     public User toUser() {
         return User.createUser(
             id,
-            name,
+            userName,
             profileImage,
             followerCount,
             followingCount

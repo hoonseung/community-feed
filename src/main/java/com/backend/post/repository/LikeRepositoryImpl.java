@@ -3,11 +3,9 @@ package com.backend.post.repository;
 import com.backend.post.application.interfaces.LikeRepository;
 import com.backend.post.domain.Post;
 import com.backend.post.domain.comment.Comment;
-import com.backend.post.repository.entity.comment.CommentEntity;
 import com.backend.post.repository.entity.like.LikeRelationEntity;
 import com.backend.post.repository.entity.like.LikeRelationIdEntity;
 import com.backend.post.repository.entity.like.LikeTarget;
-import com.backend.post.repository.entity.post.PostEntity;
 import com.backend.post.repository.jpa.JpaCommentRepository;
 import com.backend.post.repository.jpa.JpaLikeRepository;
 import com.backend.post.repository.jpa.JpaPostRepository;
@@ -40,19 +38,17 @@ public class LikeRepositoryImpl implements LikeRepository {
     @Transactional
     @Override
     public void save(Post post, User user) {
-        PostEntity postEntity = PostEntity.createPostEntity(post);
-        em.persist(
+        em.persist( 
             LikeRelationEntity.createPostLikeRelationEntity(post.getId(), user.getId()));
-        jpaPostRepository.updatePostLikeCount(postEntity);
+        jpaPostRepository.updatePostLikeCount(post.getId(), 1);
     }
 
     @Transactional
     @Override
     public void delete(Post post, User user) {
-        PostEntity postEntity = PostEntity.createPostEntity(post);
-        jpaLikeRepository.deleteById(
+        jpaLikeRepository.deleteByLikeId(
             LikeRelationEntity.createPostLikeRelationEntity(post.getId(), user.getId()).getId());
-        jpaPostRepository.updatePostLikeCount(postEntity);
+        jpaPostRepository.updatePostLikeCount(post.getId(), -1);
     }
 
     @Override
@@ -64,19 +60,18 @@ public class LikeRepositoryImpl implements LikeRepository {
     @Transactional
     @Override
     public void save(Comment comment, User user) {
-        CommentEntity commentEntity = CommentEntity.createComment(comment);
         jpaLikeRepository.save(
             LikeRelationEntity.createCommentLikeRelationEntity(comment.getId(), user.getId()));
-        jpaCommentRepository.updateCommentLikeCount(commentEntity);
+        jpaCommentRepository.updateCommentLikeCount(comment.getId(), 1);
     }
 
     @Transactional
     @Override
     public void delete(Comment comment, User user) {
-        CommentEntity commentEntity = CommentEntity.createComment(comment);
-        jpaLikeRepository.deleteById(
+
+        jpaLikeRepository.deleteByLikeId(
             LikeRelationEntity.createCommentLikeRelationEntity(comment.getId(), user.getId())
                 .getId());
-        jpaCommentRepository.updateCommentLikeCount(commentEntity);
+        jpaCommentRepository.updateCommentLikeCount(comment.getId(), -1);
     }
 }

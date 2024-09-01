@@ -18,6 +18,8 @@ public class Post {
     private final PositiveIntegerCounter likeCounter;
     @Getter
     private PostPublicationState state;
+    @Getter
+    private int commentCount;
 
 
     public static Post createPost(User user, String content, PostPublicationState state) {

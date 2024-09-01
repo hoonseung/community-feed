@@ -10,6 +10,6 @@ public interface JpaLikeRepository extends JpaRepository<LikeRelationEntity, Lik
 
 
     @Modifying
-    @Query("delete from LikeRelationEntity l where l.id = :likeId")
-    void deleteByLikeId(LikeRelationEntity likeId);
+    @Query("delete from LikeRelationEntity l where  l.id = :likeId")
+    void deleteByLikeId(LikeRelationIdEntity likeId);
 }

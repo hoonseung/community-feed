@@ -21,6 +21,6 @@ public interface JpaPostRepository extends JpaRepository<PostEntity, Long> {
     @Query("update PostEntity p set p.commentCount = p.commentCount + 1 where p.id = :id")
     void increaseCommentCount(Long id);
 
-    @Query("select p.id from PostEntity p where p.author.id = :id")
-    List<Long> findAllByAuthorId(Long id);
+    @Query("select p from PostEntity p where p.author.id = :id")
+    List<PostEntity> findAllByAuthorId(Long id);
 }

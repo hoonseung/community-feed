@@ -23,7 +23,13 @@ public class AcceptanceTestTemplate {
     }
 
 
+    protected String getEmailToken(String email) {
+        return dataLoader.getToken(email);
+    }
 
+    protected void cleanup(){
+        dataBaseCleanUp.execute();
+    }
 
 
 }

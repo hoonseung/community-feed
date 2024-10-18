@@ -30,11 +30,25 @@ public class DataLoader {
         UserAcceptanceSteps.requestFollowUser(followDto2);
     }
 
-    public String getToken(String email) {
+    public String getEmailToken(String email) {
         return entityManager.createNativeQuery(
                 "select token from community_email_verification where email = ?",
                 String.class)
             .setParameter(1, email)
-            .toString();
+            .getSingleResult().toString();
+    }
+
+    public boolean isEmailVerified(String email) {
+        return entityManager.createQuery(
+                "select isVerified from EmailVerificationEntity where email =:email", Boolean.class)
+            .setParameter("email", email)
+            .getSingleResult();
+    }
+
+    public Long getUserId(String email) {
+        return entityManager.createQuery("select u.userId from UserAuthEntity u where u.email = :email",
+                Long.class)
+            .setParameter("email", email)
+            .getSingleResult();
     }
 }

@@ -20,9 +20,13 @@ public class EmailVerificationEntity {
     private Long id;
     private String email;
     private String token;
-    private boolean isVerified;
+    private Boolean isVerified;
 
-    public EmailVerificationEntity(String email, String token) {
+    public static EmailVerificationEntity createEmailVerificationEntity(String email, String token){
+        return new EmailVerificationEntity(email, token);
+    }
+
+    private EmailVerificationEntity(String email, String token) {
         this.email = email;
         this.token = token;
         this.isVerified = false;
@@ -37,7 +41,11 @@ public class EmailVerificationEntity {
         this.isVerified = true;
     }
 
-    public void updateToken(String token){
+    public void updateToken(String token) {
         this.token = token;
+    }
+
+    public boolean hasSameToken(String token) {
+        return this.token.equals(token);
     }
 }

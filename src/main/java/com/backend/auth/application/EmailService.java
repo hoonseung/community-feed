@@ -6,9 +6,10 @@ import com.backend.auth.application.interfaces.EmailVerificationRepository;
 import com.backend.auth.domain.Email;
 import com.backend.auth.domain.RandomTokenGenerator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class EmailService {
@@ -17,12 +18,15 @@ public class EmailService {
     private final EmailVerificationRepository emailVerificationRepository;
 
 
-    @Transactional
     public void sendEmail(SendEmailRequestDto sendEmailRequestDto) {
         Email email = Email.create(sendEmailRequestDto.email());
         String token = RandomTokenGenerator.generateToken();
 
         emailSendRepository.sendEmail(email, token);
         emailVerificationRepository.createEmailVerification(email, token);
+    }
+
+    public void verifyEmail(String emailText, String token) {
+        emailVerificationRepository.verifyEmail(Email.create(emailText), token);
     }
 }

@@ -25,6 +25,10 @@ public class User {
         return new User(id, name, imageUrl, followerCount, followingCount);
     }
 
+    public static User createUser(String name, String imageUrl) {
+        return new User(null, new UserInfo(name, imageUrl));
+    }
+
 
     public User(Long id, String name, String imageUrl, Integer followerCount,
         Integer followingCount) {

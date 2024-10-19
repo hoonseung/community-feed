@@ -27,7 +27,7 @@ public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepos
 
     // 이 쿼리는 특정 사용자가 팔로우하는 유저의 피드를 가져오는 쿼리입니다.
     @Override
-    public List<GetPostContentResponseDto> getPostsResponse(Long useId, Long lastPostId) {
+    public List<GetPostContentResponseDto> getPostsResponse(Long userId, Long lastPostId) {
         return jpaQueryFactory.select(
                 Projections.fields(
                     GetPostContentResponseDto.class,
@@ -46,9 +46,9 @@ public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepos
             .from(qUserPostQueueEntity)
             .join(postEntity).on(qUserPostQueueEntity.postId.eq(postEntity.id))
             .join(userEntity).on(qUserPostQueueEntity.authorId.eq(userEntity.id))
-            .leftJoin(likeRelationEntity).on(hasLikeByMe(useId))
+            .leftJoin(likeRelationEntity).on(hasLikeByMe(userId))
             .where(
-                qUserPostQueueEntity.userId.eq(useId),
+                qUserPostQueueEntity.userId.eq(userId),
                 hasLastData(lastPostId)
             ).orderBy(qUserPostQueueEntity.postId.desc())
             .limit(20)

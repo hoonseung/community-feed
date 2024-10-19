@@ -1,5 +1,7 @@
 package com.backend.post.ui;
 
+import com.backend.common.principal.AuthPrincipal;
+import com.backend.common.principal.UserPrincipal;
 import com.backend.common.ui.ApiResponse;
 import com.backend.post.repository.jpa.JpaCommentListQueryRepository;
 import com.backend.post.repository.post_queue.UserPostQueueQueryRepository;
@@ -21,12 +23,12 @@ public class FeedController {
     private final UserPostQueueQueryRepository userPostQueueCommandRepository;
     private final JpaCommentListQueryRepository jpaCommentListQueryRepository;
 
-    @GetMapping("/{userId}")
+    @GetMapping
     public ApiResponse<List<GetPostContentResponseDto>> getPostsResponse(
-        @PathVariable(name = "userId") Long userId,
+        @AuthPrincipal UserPrincipal userPrincipal,
         @RequestParam(name = "lastPostId", required = false) Long lastPostId) {
         return ApiResponse.success(
-            userPostQueueCommandRepository.getPostsResponse(userId, lastPostId));
+            userPostQueueCommandRepository.getPostsResponse(userPrincipal.getUserId(), lastPostId));
     }
 
     @GetMapping("{postId}/comments")

@@ -41,4 +41,13 @@ public class UserAuthEntity extends TimeBaseEntity {
         );
     }
 
+    public UserAuth toUserAuthPs() {
+        return UserAuth.createUserAuthPs(
+            email,
+            password,
+            userRole,
+            userId
+        );
+    }
+
 }

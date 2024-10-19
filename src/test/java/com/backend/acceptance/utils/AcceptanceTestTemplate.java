@@ -1,5 +1,9 @@
 package com.backend.acceptance.utils;
 
+import static com.backend.acceptance.steps.LoginAcceptanceSteps.requestLoginAndGetToken;
+
+import com.backend.acceptance.steps.LoginAcceptanceSteps;
+import com.backend.auth.application.dto.LoginRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,4 +42,9 @@ public class AcceptanceTestTemplate {
     protected Long getUserId(String email) {
         return dataLoader.getUserId(email);
     }
+
+    protected String login(String email){
+        return requestLoginAndGetToken(new LoginRequestDto(email, "password"));
+    }
+
 }

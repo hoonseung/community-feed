@@ -20,8 +20,12 @@ public class GlobalExceptionHandler {
 
     // @Repository 빈들에 예외 변환 어드바이스를 적용하고 예외가 발생하면 스프링 데이터 예외로 변환함
     @ExceptionHandler(InvalidDataAccessApiUsageException.class)
-    public ApiResponse<Void> invalidDataAccessApiUsageException(InvalidDataAccessApiUsageException iae) {
+    public ApiResponse<Void> invalidDataAccessApiUsageException(
+        InvalidDataAccessApiUsageException iae) {
         log.error("occurs invalidDataAccessApiUsageException error : {}", iae.getMessage());
+        if (iae.getRootCause() != null) {
+            log.error("occurs origin cause error: {}", iae.getRootCause().toString());
+        }
         return ApiResponse.fail(ErrorCode.INVALID_INPUT_VALUE);
     }
 

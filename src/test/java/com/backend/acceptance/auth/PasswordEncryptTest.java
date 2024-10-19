@@ -14,7 +14,7 @@ class PasswordEncryptTest {
     @Test
     void givenPassword_whenMatchSamePassword_thenReturnTrue() {
         //given
-        Password password = Password.createPassword("password");
+        Password password = Password.createNewPassword("password");
         //then
         Assertions.assertTrue(password.isMatchPassword("password"));
     }
@@ -22,7 +22,7 @@ class PasswordEncryptTest {
     @Test
     void givenPassword_whenMatchDiffPassword_thenReturnFalse(){
         //given
-        Password password = Password.createPassword("password1");
+        Password password = Password.createNewPassword("password1");
         //then
         assertFalse(password.isMatchPassword("password"));
     }
@@ -30,6 +30,6 @@ class PasswordEncryptTest {
     @NullAndEmptySource
     @ParameterizedTest
     void givenNullOrEmptyString_whenMatchPassword_thenThrowError(String password){
-        assertThrows(IllegalArgumentException.class, () -> Password.createPassword(password));
+        assertThrows(IllegalArgumentException.class, () -> Password.createNewPassword(password));
     }
 }

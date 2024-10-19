@@ -4,6 +4,7 @@ import com.backend.post.application.dto.CreatePostRequestDto;
 import com.backend.post.ui.dto.GetPostContentResponseDto;
 import io.restassured.RestAssured;
 import java.util.List;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 public class FeedAcceptanceSteps {
@@ -22,11 +23,12 @@ public class FeedAcceptanceSteps {
     }
 
 
-    public static List<GetPostContentResponseDto> requestGetFeeds(Long userId) {
+    public static List<GetPostContentResponseDto> requestGetFeeds(String token) {
         return RestAssured
             .given().log().all()
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .when().get("/feed/{userId}", userId)
+            .when().get("/feed")
             .then().log().all()
             .extract()
             .jsonPath()
